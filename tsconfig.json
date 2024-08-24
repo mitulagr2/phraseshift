@@ -30,5 +30,5 @@
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": true
   },
-  "include": ["src"]
+  "include": ["src", "globals.d.ts"]
 }
