@@ -24,14 +24,24 @@ const TranscriptViewer = ({
         .getComputedStyle(scriptElem)
         .getPropertyValue("line-height")
         .slice(0, -2);
-      setLines(divHeight / +lineHeight);
+
+      const fallbackCount = transcript
+        .map(({ word }) => word)
+        .join("")
+        .split("\n").length;
+
+      setLines(divHeight / +lineHeight || fallbackCount);
     }
   }, [transcript]);
 
   return (
-    <pre className="px-4 py-3 mt-8 font-mono text-base text-left bg-transparent border rounded border-zinc-600 focus:border-zinc-100/80 focus:ring-0 sm:text-sm text-zinc-100">
+    <pre
+      data-testid="transcript-viewer"
+      className="px-4 py-3 mt-8 font-mono text-base text-left bg-transparent border rounded border-zinc-600 focus:border-zinc-100/80 focus:ring-0 sm:text-sm text-zinc-100"
+    >
       <div className="flex items-start px-1">
         <div
+          data-testid={lines}
           aria-hidden="true"
           className="pr-4 font-mono border-r select-none border-zinc-300/5 text-zinc-700"
         >
