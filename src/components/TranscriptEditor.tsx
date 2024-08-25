@@ -6,9 +6,13 @@ import PlaybackControls from "./PlaybackControls";
 import EditModal from "./EditModal";
 
 interface TranscriptEditorProps {
+  initialTranscript?: WordData[];
 }
 
 const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
+  const [transcript, setTranscript] = useState<WordData[]>(
+    initialTranscript || []
+  );
   const [time, setTime] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
@@ -31,6 +35,11 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
   }, [isPlaying]);
 
   useEffect(() => {
+    let nextStamp = 0;
+    if (transcript[currentIdx])
+      nextStamp =
+        transcript[currentIdx].start_time + transcript[currentIdx].duration;
+
     if (time >= totalTime) {
       setIsPlaying(false);
     } else if (time > nextStamp) setCurrentIdx(currentIdx + 1);
