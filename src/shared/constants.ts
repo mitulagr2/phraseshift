@@ -14,4 +14,16 @@ export const initialTranscript: WordData[] = [
   { word: "editing", start_time: 3750, duration: 800 },
   { word: "features.", start_time: 4550, duration: 650 },
   // Additional words with their respective start times and duration
+  { word: "Lorem", start_time: 5200, duration: 500 },
+  { word: "ipsum", start_time: 5700, duration: 700 },
+  { word: "dolor", start_time: 6400, duration: 300 },
+  { word: "sit", start_time: 6700, duration: 200 },
+  { word: "amet,", start_time: 6900, duration: 100 },
+  { word: "consectetur", start_time: 7000, duration: 400 },
+  { word: "adipiscing", start_time: 7400, duration: 600 },
+  { word: "elit.", start_time: 8000, duration: 200 },
+  { word: "Lorem", start_time: 8200, duration: 500 },
+  { word: "ipsum", start_time: 8700, duration: 250 },
+  { word: "dolor", start_time: 8950, duration: 800 },
+  { word: "sit...", start_time: 9750, duration: 650 },
 ];
