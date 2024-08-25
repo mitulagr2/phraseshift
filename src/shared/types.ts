@@ -3,3 +3,8 @@ export interface WordData {
   start_time: number;
   duration: number;
 }
+
+export enum CorrectionType {
+  SINGLE,
+  ALL,
+}

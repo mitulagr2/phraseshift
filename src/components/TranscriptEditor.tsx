@@ -1,58 +1,66 @@
-import { Fragment, useEffect, useState } from "react";
-import type { WordData } from "../shared/types";
+import { useState } from "react";
+import { CorrectionType, type WordData } from "../shared/types";
+import Title from "./Title";
+import TranscriptViewer from "./TranscriptViewer";
+import EditModal from "./EditModal";
 
 interface TranscriptEditorProps {
   initialTranscript: WordData[];
 }
 
 const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
-  const [lines, setLines] = useState(1);
+  const [transcript, setTranscript] = useState(initialTranscript);
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
 
-  useEffect(() => {
-    const scriptElem = document.querySelector<HTMLElement>("#script");
-    if (scriptElem) {
-      const divHeight = scriptElem.offsetHeight;
-      const lineHeight = window
-        .getComputedStyle(scriptElem)
-        .getPropertyValue("line-height")
-        .slice(0, -2);
-      setLines(divHeight / +lineHeight);
+  const handleSeek = (idx: number) => {
+    setCurrentIdx(idx);
+  };
+
+  const handleEditToggle = () => {
+    setIsEditing((prev) => !prev);
+  };
+
+  const handleEditAction = (
+    newWord: string,
+    correctionType: CorrectionType
+  ) => {
+    handleEditToggle();
+
+    const oldWord = transcript[currentIdx].word;
+    let newTranscript;
+
+    if (correctionType === CorrectionType.ALL) {
+      newTranscript = transcript.map((item) =>
+        item.word === oldWord ? { ...item, word: newWord } : item
+      );
+    } else {
+      newTranscript = transcript.map((item, idx) =>
+        idx === currentIdx ? { ...item, word: newWord } : item
+      );
     }
-  }, []);
+
+    setTranscript(newTranscript);
+  };
 
   return (
     <div className="container px-8 mx-auto pt-16 lg:pt-32">
       <div className="max-w-3xl mx-auto">
-        <h1 className="py-4 text-5xl font-bold text-center text-transparent bg-gradient-to-t bg-clip-text from-zinc-100/60 to-white">
-          Transcript Editor
-        </h1>
+        <Title>Transcript Editor</Title>
 
-        <pre className="px-4 py-3 mt-8 font-mono text-base text-left bg-transparent border rounded border-zinc-600 focus:border-zinc-100/80 focus:ring-0 sm:text-sm text-zinc-100">
-          <div className="flex items-start px-1">
-            <div
-              aria-hidden="true"
-              className="pr-4 font-mono border-r select-none border-zinc-300/5 text-zinc-700"
-            >
-              {Array.from({
-                length: lines,
-              }).map((_, index) => (
-                <Fragment key={index}>
-                  {(index + 1).toString().padStart(2, "0")}
-                  <br />
-                </Fragment>
-              ))}
-            </div>
+        <TranscriptViewer
+          transcript={transcript}
+          currentIdx={currentIdx}
+          handleSeek={handleSeek}
+          handleEditToggle={handleEditToggle}
+        />
 
-            <div
-              id="script"
-              className="text-wrap w-full p-0 text-base bg-transparent border-0 appearance-none resize-none hover:resize text-zinc-100 placeholder-zinc-500 focus:ring-0 sm:text-sm"
-            >
-              {initialTranscript.map((item, idx) => (
-                <span key={idx}>{item.word} </span>
-              ))}
-            </div>
-          </div>
-        </pre>
+        <EditModal
+          isEditing={isEditing}
+          current={transcript[currentIdx]}
+          handleEditToggle={handleEditToggle}
+          handleEditAction={handleEditAction}
+        />
       </div>
     </div>
   );
