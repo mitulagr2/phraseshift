@@ -1,6 +1,10 @@
+<img align="left" width="80" height="80" src="https://github.com/mitulagr2/phraseshift/blob/master/public/logo.jpeg?raw=true" alt="PhraseShift Logo">
+
 # PhraseShift
 
 Your transcript, transformed.
+
+## Demo
 
 https://github.com/user-attachments/assets/315c8055-a233-4661-ab4b-72ab84177933
 
