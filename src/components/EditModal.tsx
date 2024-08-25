@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 import { CorrectionType, type WordData } from "../shared/types";
 
 interface EditModalProps {
+  /** Current modal view state */
   isEditing: boolean;
-  current: WordData;
+  /** Word at current cursor index */
+  current?: WordData;
+  /** Switch modal view state */
   handleEditToggle: () => void;
+  /** Update word at current cursor index */
   handleEditAction: (newWord: string, correctionType: CorrectionType) => void;
 }
 
+/**
+ * Displays edit word modal
+ */
 const EditModal = ({
   isEditing,
   current,
@@ -22,10 +29,12 @@ const EditModal = ({
 
   if (!isEditing) return <></>;
 
+  /** Dismiss modal on losing focus */
   const handleOutsideClick = () => {
     handleEditToggle();
   };
 
+  /** Prevent dismiss on modal activity */
   const handleInsideClick = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
@@ -52,6 +61,7 @@ const EditModal = ({
             />
             <div className="flex justify-end">
               <button
+                data-testid="correct-all"
                 onClick={() => handleEditAction(text, CorrectionType.ALL)}
                 disabled={text.length === 0}
                 className={`h-9 mr-4 inline-flex justify-center items-center transition-all rounded-lg px-4 py-1.5 md:py-2 text-base font-semibold leading-7 bg-zinc-700 ring-1 ring-zinc-600/80 duration-150 ${
@@ -63,6 +73,7 @@ const EditModal = ({
                 <span>Correct All</span>
               </button>
               <button
+                data-testid="correct"
                 onClick={() => handleEditAction(text, CorrectionType.SINGLE)}
                 disabled={text.length === 0}
                 className={`h-9 inline-flex justify-center items-center transition-all rounded-lg px-4 py-1.5 md:py-2 text-base font-semibold leading-7 bg-yellow-400 ring-1 ring-zinc-600/80 duration-150 ${

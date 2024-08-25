@@ -1,5 +1,6 @@
 import type { WordData } from "./types";
 
+/** (Optional) Transcript to be shown */
 export const initialTranscript: WordData[] = [
   { word: "Hello", start_time: 0, duration: 500 },
   { word: "world", start_time: 500, duration: 700 },

@@ -1,3 +1,6 @@
+/**
+ * Developer credits
+ */
 const Footer = () => {
   return (
     <footer className="bottom-0 border-t inset-2x-0 border-zinc-500/10">

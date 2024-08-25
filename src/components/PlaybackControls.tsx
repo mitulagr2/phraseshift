@@ -1,12 +1,19 @@
 import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
 
 interface PlaybackControlsProps {
+  /** Current playback state */
   isPlaying: boolean;
+  /** Current timer position in millis */
   time: number;
+  /** Max timer position in millis */
   totalTime: number;
+  /** Switch playback state */
   handlePlayToggle: () => void;
 }
 
+/**
+ * Play/Pause and display Timer
+ */
 const PlaybackControls = ({
   isPlaying,
   time,
@@ -45,17 +52,13 @@ const PlaybackControls = ({
           className="h-12 inline-flex justify-center items-center px-4 py-1.5 md:py-2 text-base font-semibold leading-7 text-zinc-100"
           onClick={handlePlayToggle}
         >
-          {(minutes < 10 ? "0" : "") +
-            minutes +
+          {("" + minutes).padStart(2, "0") +
             ":" +
-            (+seconds < 10 ? "0" : "") +
-            seconds}
-          {" / "}
-          {(minutesTotal < 10 ? "0" : "") +
-            minutesTotal +
+            seconds.padStart(5, "0") +
+            " / " +
+            ("" + minutesTotal).padStart(2, "0") +
             ":" +
-            (+secondsTotal < 10 ? "0" : "") +
-            secondsTotal}
+            secondsTotal.padStart(5, "0")}
         </span>
       </div>
     </div>
