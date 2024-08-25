@@ -2,7 +2,7 @@
 
 # PhraseShift
 
-Your transcript, transformed.
+A user-friendly transcript editor designed to provide a seamless experience for editing and syncing transcripts.
 
 ## Demo
 
@@ -47,3 +47,15 @@ https://github.com/user-attachments/assets/315c8055-a233-4661-ab4b-72ab84177933
     ├── TranscriptEditor.test.tsx   # Renders appropriately on missing or empty transcript
     └── TranscriptViewer.test.tsx   # Renders transcript and line numbers appropriately
 ```
+
+## Tech Stack
+
+This project was built using Node v22.5 and uses the following technologies:
+
+- [React](https://react.dev/) - Vanilla js with babel and webpack
+- [TypeScript](https://www.typescriptlang.org/) - Transpiler
+- [TailwindCSS](https://tailwindcss.com/) - CSS framework
+- [PostCSS](https://postcss.org/) - CSS processor
+- [heroicons](https://heroicons.com/) - SVG library
+- [Jest](https://jestjs.io/) - Testing framework
+- [Bun](https://bun.sh/) - Package management
