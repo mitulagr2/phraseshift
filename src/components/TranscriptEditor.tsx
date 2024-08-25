@@ -16,6 +16,10 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const totalTime = transcript.at(-1)
+    ? transcript.at(-1)!.start_time + transcript.at(-1)!.duration
+    : 0;
+
   useEffect(() => {
     const playing =
       isPlaying &&
@@ -27,6 +31,14 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
       playing && clearInterval(playing);
     };
   }, [isPlaying]);
+
+  useEffect(() => {
+    const nextStamp =
+      transcript[currentIdx].start_time + transcript[currentIdx].duration;
+    if (time >= totalTime) {
+      handlePlayToggle();
+    } else if (time > nextStamp) setCurrentIdx(currentIdx + 1);
+  }, [currentIdx, time, totalTime, transcript]);
 
   const handleSeek = (idx: number) => {
     setCurrentIdx(idx);
@@ -71,11 +83,7 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
         <PlaybackControls
           isPlaying={isPlaying}
           time={time}
-          totalTime={
-            transcript.at(-1)
-              ? transcript.at(-1)!.start_time + transcript.at(-1)!.duration
-              : 0
-          }
+          totalTime={totalTime}
           handlePlayToggle={handlePlayToggle}
         />
 
