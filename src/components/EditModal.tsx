@@ -14,10 +14,10 @@ const EditModal = ({
   handleEditToggle,
   handleEditAction,
 }: EditModalProps) => {
-  const [text, setText] = useState(current.word);
+  const [text, setText] = useState(current ? current.word : "");
 
   useEffect(() => {
-    setText(current.word);
+    setText(current ? current.word : "");
   }, [current]);
 
   if (!isEditing) return <></>;

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CorrectionType, type WordData } from "../shared/types";
 import Title from "./Title";
 import TranscriptViewer from "./TranscriptViewer";
+import PlaybackControls from "./PlaybackControls";
 import EditModal from "./EditModal";
 
 interface TranscriptEditorProps {
@@ -10,11 +11,38 @@ interface TranscriptEditorProps {
 
 const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
   const [transcript, setTranscript] = useState(initialTranscript);
+  const [time, setTime] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const totalTime = transcript.at(-1)
+    ? transcript.at(-1)!.start_time + transcript.at(-1)!.duration
+    : 0;
+
+  useEffect(() => {
+    const playing =
+      isPlaying &&
+      setInterval(() => {
+        setTime((prev) => prev + 5);
+      }, 5);
+
+    return () => {
+      playing && clearInterval(playing);
+    };
+  }, [isPlaying]);
+
+  useEffect(() => {
+    const nextStamp =
+      transcript[currentIdx].start_time + transcript[currentIdx].duration;
+    if (time >= totalTime) {
+      handlePlayToggle();
+    } else if (time > nextStamp) setCurrentIdx(currentIdx + 1);
+  }, [currentIdx, time, totalTime, transcript]);
 
   const handleSeek = (idx: number) => {
     setCurrentIdx(idx);
+    setTime(transcript[idx].start_time);
   };
 
   const handleEditToggle = () => {
@@ -43,10 +71,21 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
     setTranscript(newTranscript);
   };
 
+  const handlePlayToggle = () => {
+    setIsPlaying((prev) => !prev);
+  };
+
   return (
     <div className="container px-8 mx-auto pt-16 lg:pt-32">
       <div className="max-w-3xl mx-auto">
         <Title>Transcript Editor</Title>
+
+        <PlaybackControls
+          isPlaying={isPlaying}
+          time={time}
+          totalTime={totalTime}
+          handlePlayToggle={handlePlayToggle}
+        />
 
         <TranscriptViewer
           transcript={transcript}
