@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 import { CorrectionType, type WordData } from "../shared/types";
 
 interface EditModalProps {
+  /** Current modal view state */
   isEditing: boolean;
+  /** Word at current cursor index */
   current?: WordData;
+  /** Switch modal view state */
   handleEditToggle: () => void;
+  /** Update word at current cursor index */
   handleEditAction: (newWord: string, correctionType: CorrectionType) => void;
 }
 
+/**
+ * Displays edit word modal
+ */
 const EditModal = ({
   isEditing,
   current,
@@ -22,10 +29,12 @@ const EditModal = ({
 
   if (!isEditing) return <></>;
 
+  /** Dismiss modal on losing focus */
   const handleOutsideClick = () => {
     handleEditToggle();
   };
 
+  /** Prevent dismiss on modal activity */
   const handleInsideClick = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();

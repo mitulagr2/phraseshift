@@ -6,22 +6,32 @@ import PlaybackControls from "./PlaybackControls";
 import EditModal from "./EditModal";
 
 interface TranscriptEditorProps {
+  /** (Optional) Transcript to be shown */
   initialTranscript?: WordData[];
 }
 
+/**
+ * Transcript editor component
+ */
 const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
   const [transcript, setTranscript] = useState<WordData[]>(
     initialTranscript || []
   );
+  /** Current playback position in millis */
   const [time, setTime] = useState(0);
+  /** Current cursor index */
   const [currentIdx, setCurrentIdx] = useState(0);
+  /** Current edit modal state */
   const [isEditing, setIsEditing] = useState(false);
+  /** Current playback state */
   const [isPlaying, setIsPlaying] = useState(false);
 
+  /** Max timer position in millis */
   const totalTime = transcript.at(-1)
     ? transcript.at(-1)!.start_time + transcript.at(-1)!.duration
     : 0;
 
+  // Update timer every 16ms
   useEffect(() => {
     const playing =
       isPlaying &&
@@ -34,6 +44,7 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
     };
   }, [isPlaying]);
 
+  // Update current cursor index in sync with timer
   useEffect(() => {
     let nextStamp = 0;
     if (transcript[currentIdx])
@@ -45,15 +56,18 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
     } else if (time > nextStamp) setCurrentIdx(currentIdx + 1);
   }, [currentIdx, time, totalTime, transcript]);
 
+  /** Modify current cursor index and playback position */
   const handleSeek = (idx: number) => {
     setCurrentIdx(idx);
     setTime(transcript[idx].start_time);
   };
 
+  /** Switch modal view state */
   const handleEditToggle = () => {
     setIsEditing((prev) => !prev);
   };
 
+  /** Update word at current cursor index */
   const handleEditAction = (
     newWord: string,
     correctionType: CorrectionType
@@ -64,10 +78,12 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
     let newTranscript;
 
     if (correctionType === CorrectionType.ALL) {
+      // Modify word at current cursor index only
       newTranscript = transcript.map((item) =>
         item.word === oldWord ? { ...item, word: newWord } : item
       );
     } else {
+      // Modify all word instances
       newTranscript = transcript.map((item, idx) =>
         idx === currentIdx ? { ...item, word: newWord } : item
       );
@@ -76,6 +92,7 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
     setTranscript(newTranscript);
   };
 
+  /** Switch playback state */
   const handlePlayToggle = () => {
     if (time >= totalTime) {
       setCurrentIdx(0);

@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* Project-wide font style */
 @layer base {
   html {
     font-family: "Inter", sans-serif;

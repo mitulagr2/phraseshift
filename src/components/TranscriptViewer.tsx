@@ -3,28 +3,37 @@ import type { WordData } from "../shared/types";
 
 interface TranscriptViewerProps {
   transcript: WordData[];
+  /** Current cursor index */
   currentIdx: number;
+  /** Modify current cursor index and playback position */
   handleSeek: (idx: number) => void;
+  /** Switch modal view state */
   handleEditToggle: () => void;
 }
 
+/**
+ * Displays script with sequential highlighting
+ */
 const TranscriptViewer = ({
   transcript,
   currentIdx,
   handleSeek,
   handleEditToggle,
 }: TranscriptViewerProps) => {
+  /** Number of script lines visibile on client editor screen */
   const [lines, setLines] = useState(1);
 
   useEffect(() => {
     const scriptElem = document.querySelector<HTMLElement>("#script");
     if (scriptElem) {
+      // Total client editor screen height / Single client editor line height
       const divHeight = scriptElem.offsetHeight;
       const lineHeight = window
         .getComputedStyle(scriptElem)
         .getPropertyValue("line-height")
         .slice(0, -2);
 
+      /** Number of line-breaks in transcript */
       const fallbackCount = transcript
         .map(({ word }) => word)
         .join("")

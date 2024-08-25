@@ -3,6 +3,9 @@ import TranscriptEditor from "../components/TranscriptEditor";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+/**
+ * Wrapper for Transcript Editor
+ */
 function App() {
   return (
     <div className="App">

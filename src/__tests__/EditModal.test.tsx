@@ -8,7 +8,7 @@ test("renders and displays word", () => {
   render(
     <EditModal
       isEditing={true}
-      current={testWordData}
+      current={testWordData} // test word is passed
       handleEditToggle={() => {}}
       handleEditAction={() => {}}
     />
@@ -23,7 +23,7 @@ test("disables button on blank input", async () => {
   render(
     <EditModal
       isEditing={true}
-      handleEditToggle={() => {}}
+      handleEditToggle={() => {}} // test word is not passed
       handleEditAction={() => {}}
     />
   );

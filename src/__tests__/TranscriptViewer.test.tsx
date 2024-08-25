@@ -9,7 +9,7 @@ const testTranscript = [
 test("renders and displays script", () => {
   render(
     <TranscriptViewer
-      transcript={testTranscript}
+      transcript={testTranscript} // test word is passed
       currentIdx={0}
       handleSeek={() => {}}
       handleEditToggle={() => {}}
@@ -22,7 +22,7 @@ test("renders and displays script", () => {
 test("line count updates on longer script", () => {
   const { rerender } = render(
     <TranscriptViewer
-      transcript={testTranscript}
+      transcript={testTranscript} // test word is passed
       currentIdx={0}
       handleSeek={() => {}}
       handleEditToggle={() => {}}
@@ -36,7 +36,7 @@ test("line count updates on longer script", () => {
     <TranscriptViewer
       transcript={testTranscript.map((item) => ({
         ...item,
-        word: item.word + "\n",
+        word: item.word + "\n", // new line is added to end of test word
       }))}
       currentIdx={0}
       handleSeek={() => {}}

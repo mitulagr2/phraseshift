@@ -1,3 +1,6 @@
+/**
+ * Navbar and Brand Title
+ */
 const Header = () => {
   return (
     <header className="top-0 z-30 w-full px-4 sm:fixed backdrop-blur bh-zinc-900/50">

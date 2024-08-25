@@ -1,12 +1,19 @@
 import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
 
 interface PlaybackControlsProps {
+  /** Current playback state */
   isPlaying: boolean;
+  /** Current timer position in millis */
   time: number;
+  /** Max timer position in millis */
   totalTime: number;
+  /** Switch playback state */
   handlePlayToggle: () => void;
 }
 
+/**
+ * Play/Pause and display Timer
+ */
 const PlaybackControls = ({
   isPlaying,
   time,

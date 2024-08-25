@@ -5,7 +5,7 @@ import PlaybackControls from "../components/PlaybackControls";
 test("renders play button initially", () => {
   render(
     <PlaybackControls
-      isPlaying={false}
+      isPlaying={false} // paused state
       time={0}
       totalTime={100}
       handlePlayToggle={() => {}}
@@ -18,7 +18,7 @@ test("renders play button initially", () => {
 test("displays pause after play event", () => {
   render(
     <PlaybackControls
-      isPlaying={true}
+      isPlaying={true} // playing state
       time={0}
       totalTime={100}
       handlePlayToggle={() => {}}
