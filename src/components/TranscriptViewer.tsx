@@ -26,7 +26,7 @@ const TranscriptViewer = ({
         .slice(0, -2);
       setLines(divHeight / +lineHeight);
     }
-  }, []);
+  }, [transcript]);
 
   return (
     <pre className="px-4 py-3 mt-8 font-mono text-base text-left bg-transparent border rounded border-zinc-600 focus:border-zinc-100/80 focus:ring-0 sm:text-sm text-zinc-100">
