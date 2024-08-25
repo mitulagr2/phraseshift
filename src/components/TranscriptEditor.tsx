@@ -26,8 +26,8 @@ const TranscriptEditor = ({ initialTranscript }: TranscriptEditorProps) => {
     const playing =
       isPlaying &&
       setInterval(() => {
-        setTime((prev) => prev + 5);
-      }, 5);
+        setTime((prev) => prev + 16);
+      }, 16);
 
     return () => {
       playing && clearInterval(playing);
